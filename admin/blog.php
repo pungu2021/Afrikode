@@ -69,7 +69,7 @@
                             <td><?php echo$toto['photo'];?></td>
                              <td> <?php echo temps(date("Y-m-d H:i:s"),$toto['date_pub']);?></td>
                             <td><a href="blog.php?id=<?php echo $toto['id'];?>"><button class="btn btn-primary btn-rounded" name="modifier">modifier</button></a></td>
-                            <td><button class="btn btn-danger btn-rounded">supprimer</button></td>
+                            <td><a href="supprimer.php?id=<?php echo $toto['id'];?>"><button class="btn btn-danger btn-rounded supprimer" id="supprimer">supprimer</button></a></td>
                         </tr>
                         <?php }?>
                         <tr>
@@ -93,6 +93,7 @@
   <script src="js/off-canvas.js"></script>
   <script src="js/hoverable-collapse.js"></script>
   <script src="js/template.js"></script>
+  <script src="js/afr.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
   <!-- End custom js for this page-->
