@@ -9,4 +9,15 @@ sup.forEach(element => {
         }
     });
 });
+var su=document.querySelectorAll(".bt");
+su.forEach(element => {
+    element.addEventListener("click",function(e){
+        if(confirm("voulez vous vraiment supprimer cet article definitivement dans votre base de données?")){
+            
+        }
+        else{
+            e.preventDefault();
+        }
+    });
+});
  

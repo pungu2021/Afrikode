@@ -261,5 +261,15 @@
              return $pre->fetchAll();
        }
     }
+    function recuperation_newsletter(){
+      $pre=$this->_con->query("SELECT * FROM newsletter ORDER BY id DESC");
+      return $pre->fetchAll();
+    }
+    function suppression_newsletter($id){
+      $id=(int)$id;
+      $pre=$this->_con->prepare("DELETE FROM newsletter WHERE id=:id");
+     $pre->bindParam(":id",$id);
+      $pre->execute();
+    }
   }
 

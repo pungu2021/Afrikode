@@ -13,11 +13,9 @@
   }
  else if(isset($_GET["id"])){
     $rec=$objet->recuperation($_GET["id"]);
-     var_dump($rec);
   }
    if(isset($_POST["modifier_valide"])){
       $objet->Modification($_POST["titre"],$_POST["contenu"],$_POST["photo"],$_POST["categorie"],$_GET["id"]);
-      var_dump($objet);
     }
    else if(isset($_POST["supprimer"])){
       $objet->Suppression($_POST["id"]);

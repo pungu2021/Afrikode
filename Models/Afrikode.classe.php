@@ -261,5 +261,20 @@
              return $pre->fetchAll();
        }
     }
+    function newsletter($p){
+      $gmail=filter_var($p,FILTER_VALIDATE_EMAIL);
+      if(preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#",$gmail)){
+        $pre=$this->_con->prepare("INSERT INTO newsletter(gmail,date_pub) VALUES(?,NOW())");
+        $pre->execute(array($gmail));
+        return'<span id="su">votre message à été envoyé avec succes</span>';
+      }
+      else{
+        return "votre gmail n'est pas correct";
+      }
+    }
+    function recuperation_newsletter(){
+      $pre=$this->_con->query("SELECT * FROM newsletter ORDER BY id DESC");
+      return $pre->fetchAll();
+    }
   }
 

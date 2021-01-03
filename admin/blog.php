@@ -19,7 +19,7 @@
                   <form class="forms-sample" action="<?php echo $_SERVER['REQUEST_URI'] ?>" enctype="multipart/form-data" method="post">
                     <div class="form-group">
                       <label for="exampleInputName1">Titre de l'article</label>
-                      <input type="text" class="form-control" id="exampleInputName1" placeholder="Titre de l'article" name="titre" value="<?php if(!empty($rec)) echo $rec[0]['titre'] ?>"> 
+                      <input type="text" class="form-control" id="exampleInputName1" placeholder="Titre de l'article" name="titre" value="<?php if(!empty($rec)) echo $rec[0]['titre'] ?>" maxlength="60"> 
                     </div>
                 
                     <div class="form-group">

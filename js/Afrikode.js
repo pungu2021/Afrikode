@@ -44,3 +44,32 @@ pl.addEventListener("keyup",function(){
         affi.innerHTML="";
     }
 });
+
+// newsletter du site avec ajax 
+var vb=document.getElementById('news');
+document.getElementById("news").addEventListener("click",function(e){
+              e.preventDefault();
+              var xhl;
+            if(window.XMLHttpRequest){
+               xhl=new XMLHttpRequest();
+            }
+            else if(window.ActiveXObject){
+                xhl=new ActiveXObject(Microsoft.XMLHTTP);
+            }
+     var data= new FormData(vb);
+    xhl.onreadystatechange=function(){
+        if(xhl.readyState==4 && xhl.status==200){
+      document.getElementById("toto").innerHTML=xhl.responseText;
+      if(xhl.responseText=='<span id="su">votre message à été envoyé avec succes</span>'){
+           var cr=document.createAttribute("disabled");
+           var gx=document.querySelector(".ne");
+           cr.value="disabled"; 
+           gx.setAttributeNode(cr);
+      }
+        }
+        else
+        document.getElementById("toto").innerHTML="erreur";
+    }
+    xhl.open("POST","./news.php");
+    xhl.send(data);
+});

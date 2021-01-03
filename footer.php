@@ -32,10 +32,10 @@
               <span class="titre">Newsletter</span>
               <p class="vop1"><input type="checkbox" name="" id="" checked> Voulez-vous vous abonner à notre newsletter et recevez nos emails ?</p>
               <span class="email">Email</span>
-              <form action="">
+              <form id="news">
                   <input type="email" name="newsletter" id="new" class="yup"placeholder="votre email ici" ><br>
                   <span id="toto"></span>
-                  <button class="new">Envoyer</button>
+                  <button class="new ne" >Envoyer</button>
               </form>
         </aside>
       </section>
