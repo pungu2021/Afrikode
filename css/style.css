@@ -206,7 +206,7 @@ text-align: center;
   color: black;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
-  width:95%;
+  width:80%;
   margin: auto;
   transition: .5s;
   margin-top: -10px;
@@ -223,12 +223,14 @@ text-align: center;
   font-family: Arial, Helvetica, sans-serif;
   opacity: 0.5;
   font-size: 14px;
+  padding-top: 10px;
 }
 .crep{
   box-shadow: 2px 2px 15px rgba(128, 128, 128,0.1);
   border: 2px solid rgba(128, 128, 128,0.1);
   margin-top: 25px;
-  text-align: center
+  text-align: center;
+  height: 300px;
 }
 .xl a{
   color: black;
@@ -399,6 +401,7 @@ INDEX du site
   position: relative;
   z-index: -1;
 }
+
 .noir{
   height: 400px;
   width: 100%;
@@ -737,6 +740,7 @@ h3{
   color: #029bde;
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
+  word-break: break-all;
 }
 .bonus-image{
   height: 300px;
@@ -1032,8 +1036,10 @@ FORMATION
 
 
 
-
-
+/*Newsletter*/
+#su{
+  color: green !important;
+}
 /*------------------------------------------------
 Media queries
 

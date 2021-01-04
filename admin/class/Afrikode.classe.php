@@ -38,7 +38,7 @@
      * @param [type] $photo
      * @return void
      */
-    public function Insertion($titre,$contenu,$photo){
+    public function Insertion($titre,$contenu,$photo,$categorie){
       // suppression de caractere illegaux
         $titre=htmlspecialchars($titre);
         $contenu_photo=htmlspecialchars(trim($photo['name']));
@@ -57,8 +57,8 @@
                 // deplacement de l'image vers notre projet dans le dossier image
                   move_uploaded_file($temporaire,'../images/'.$contenu_photo);
                 // prepation d'insertion de données
-                $prepare_requete=$this->_con->prepare('INSERT INTO articles(titre,contenu,photo,date_pub) VALUES(?,?,?,NOW())');
-                $prepare_requete->execute(array($titre,$contenu,$contenu_photo));
+                $prepare_requete=$this->_con->prepare('INSERT INTO articles(titre,contenu,photo,categorie,date_pub) VALUES(?,?,?,?,NOW())');
+                $prepare_requete->execute(array($titre,$contenu,$contenu_photo,$categorie));
              }
         }
          }
@@ -71,7 +71,7 @@
       * @param [type] $id
       * @return void
       */
-     public function  Modification($titre,$contenu,$photo,$id){
+     public function  Modification($titre,$contenu,$photo,$categorie,$id){
         // suppression de caractere illegaux
       $titre=htmlspecialchars($titre);
       $contenu_photo=htmlspecialchars(trim($photo));
@@ -79,8 +79,8 @@
       // verification si les parametre passer existe et ils ne sont pas nuls
       if(isset($titre) and !empty($titre) and isset($contenu) and !empty($contenu) and isset($contenu_photo) and !empty($contenu_photo)and is_numeric($id) and !empty($id)){
          // modification de donnée dans la base de donnée
-              $prepare_requete=$this->_con->prepare('UPDATE articles SET titre=?,contenu=?,photo=?,date_pub=NOW() WHERE id=?');
-              $prepare_requete->execute(array($titre,$contenu,$contenu_photo,$id));
+              $prepare_requete=$this->_con->prepare('UPDATE articles SET titre=?,contenu=?,photo=?,categorie=?,date_pub=NOW() WHERE id=?');
+              $prepare_requete->execute(array($titre,$contenu,$contenu_photo,$categorie,$id));
       }
      }
       /**
@@ -261,20 +261,15 @@
              return $pre->fetchAll();
        }
     }
-    function newsletter($p){
-      $gmail=filter_var($p,FILTER_VALIDATE_EMAIL);
-      if(preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#",$gmail)){
-        $pre=$this->_con->prepare("INSERT INTO newsletter(gmail,date_pub) VALUES(?,NOW())");
-        $pre->execute(array($gmail));
-        return'<span id="su">votre message à été envoyé avec succes</span>';
-      }
-      else{
-        return "votre gmail n'est pas correct";
-      }
-    }
     function recuperation_newsletter(){
       $pre=$this->_con->query("SELECT * FROM newsletter ORDER BY id DESC");
       return $pre->fetchAll();
+    }
+    function suppression_newsletter($id){
+      $id=(int)$id;
+      $pre=$this->_con->prepare("DELETE FROM newsletter WHERE id=:id");
+     $pre->bindParam(":id",$id);
+      $pre->execute();
     }
   }
 

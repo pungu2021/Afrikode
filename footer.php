@@ -30,12 +30,19 @@
        </aside>
        <aside class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
               <span class="titre">Newsletter</span>
+<<<<<<< HEAD
               <p class="text-justify vop1"><input type="checkbox" name="" id="" checked> Voulez-vous vous abonner à notre newsletter et recevez nos emails ?</p>
               <span class="email">Email</span> <br>
               <form action="">
                   <input type="email" name="newsletter" id="new" class=" text-justify yup"placeholder="votre email ici" ><br>
+=======
+              <p class="vop1"><input type="checkbox" name="" id="" checked> Voulez-vous vous abonner à notre newsletter et recevez nos emails ?</p>
+              <span class="email">Email</span>
+              <form id="news">
+                  <input type="email" name="newsletter" id="new" class="yup"placeholder="votre email ici" ><br>
+>>>>>>> 97fc4ea5fd5e0a1117e0763738426ae4d5dedc1f
                   <span id="toto"></span>
-                  <button class="new">Envoyer</button>
+                  <button class="new ne" >Envoyer</button>
               </form>
         </aside>
       </section>

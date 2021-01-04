@@ -58,6 +58,7 @@
 /* === Import template variables === */
 /*-------------------------------------------------------------------*/
 /* === SCSS Compass Functions === */
+
 @-moz-keyframes flash {
   0% {
     opacity: 1;
@@ -21907,3 +21908,16 @@ dl li {
 }
 
 /*# sourceMappingURL=maps/style.css.map */
+.visible-true{
+  display: block !important;
+}
+.visible-false{
+  display: none !important;
+}
+.bt{
+  border-radius: 50px;
+  background-color: rgb(236, 149, 149);
+  color: white;
+  height: 40px;
+  border: 1px solid  rgb(236, 149, 149);
+}
