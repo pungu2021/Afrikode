@@ -6,6 +6,6 @@
    spl_autoload_register('afrikode');
    $objet=new Afrikode;
    if(isset($_GET["id"])){
-   $objet->Suppression($_GET["id"]);
+   $objet->Suppression($_GET["id"], $_GET["para"]);
 }
 header("location:blog.php");

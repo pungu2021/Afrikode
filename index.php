@@ -33,7 +33,7 @@
                       <a href="<?php echo separer($toto["titre"]).'-'.$toto["id"]?>">
                           <div class="crep">
                             <figure> 
-                               <img src="images/<?php echo $toto["photo"]?>" alt="image-bloc" class="image-bloc">
+                               <img src="img/<?php echo $toto["photo"]?>" alt="image-bloc" class="image-bloc">
                             </figure>
                             <div class="noir-image"></div>
                               <figure>

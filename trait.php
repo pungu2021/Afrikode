@@ -21,9 +21,13 @@ if(isset($_POST['pseudo']) and !empty($_POST['pseudo']) and isset($_POST['gmail'
          $req=$con->prepare("INSERT INTO commentaire(pseudo,gmail,mesage,id_article,pub_mes) VALUES(?,?,?,?,NOW())");
          $req->execute(array($pseud,$gmail,$message,$art));
          $url=$_SESSION["url"];
+         $_SESSION["conf"]='<span class="cool">Votre message a été  envoyé </span>';
         header("location:$url");
 }
+else{
 $url=$_SESSION["url"];
+$_SESSION["conf"]=' <span class="erro">Votre message n\'a été  envoyé veuillez verifier vos champs </span>';
 header("location:$url");
+}
 
  

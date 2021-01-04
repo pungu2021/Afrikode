@@ -3,7 +3,7 @@
       require 'vue'.DIRECTORY_SEPARATOR.'header.php';
  ?>
       <div class="tableau">
-         <table class="table table-bordered table-striped table-hover">
+         <table class=" table table table-bordered table-striped table-hover">
               <thead>
                   <tr>
                       <th>Id</th>

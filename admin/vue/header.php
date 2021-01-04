@@ -90,5 +90,17 @@
               <span class="menu-title">Pub</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="commentaire.php">
+              <i class="mdi mdi-file-document-box-outline menu-icon"></i>
+              <span class="menu-title">Commentaires</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="repondre.php">
+              <i class="mdi mdi-file-document-box-outline menu-icon"></i>
+              <span class="menu-title">reponse</span>
+            </a>
+          </li>
         </ul>
       </nav>

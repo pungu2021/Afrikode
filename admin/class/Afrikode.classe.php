@@ -55,7 +55,7 @@
                 // remplacer le point par le dernier numero id et concatener avec le point
                 $contenu_photo=str_replace('.',$i.'.',$contenu_photo);
                 // deplacement de l'image vers notre projet dans le dossier image
-                  move_uploaded_file($temporaire,'../images/'.$contenu_photo);
+                  move_uploaded_file($temporaire,'../img/'.$contenu_photo);
                 // prepation d'insertion de données
                 $prepare_requete=$this->_con->prepare('INSERT INTO articles(titre,contenu,photo,categorie,date_pub) VALUES(?,?,?,?,NOW())');
                 $prepare_requete->execute(array($titre,$contenu,$contenu_photo,$categorie));
@@ -86,10 +86,13 @@
       /**
        *suppression des de données dans la base de données
        */
-    public  function Suppression($id){
+    public  function Suppression($id,$img){
       if(isset($id) and is_numeric($id) and !empty($id)){
         $id=(int)$id;
         // Suppression de donnée dans la base de donnée
+               $fichier='/img/'.$img;
+               if(file_exists($fichier))
+                  unlink($fichier);
              $prepare_requete=$this->_con->prepare('DELETE FROM articles WHERE id=?');
              $prepare_requete->execute(array($id));
      }
@@ -270,6 +273,36 @@
       $pre=$this->_con->prepare("DELETE FROM newsletter WHERE id=:id");
      $pre->bindParam(":id",$id);
       $pre->execute();
+    }
+    public function rec_commentaire(){
+      $req=$this->_con->query('SELECT * from commentaire ORDER BY id DESC LIMIT 0,10');
+      return $req->fetchAll();
+    }
+    public function rec_reponse(){
+      $req=$this->_con->query('SELECT * from repondre ORDER BY id_auto DESC LIMIT 0,10');
+      return $req->fetchAll();
+    }
+    function approuver_commentaire($id){
+      $num=1;
+      $prepare_requete=$this->_con->prepare('UPDATE commentaire SET approuver=? WHERE id=?');
+      $prepare_requete->execute(array($num,$id));
+
+    }
+    function approuver_repondre($id){
+      $num=1;
+     $prepare_requete=$this->_con->prepare('UPDATE repondre SET approuver=? WHERE id_auto=?');
+      $prepare_requete->execute(array($num,$id));
+
+    }
+    function supprimer_repondre($id){
+      $prepare_requete=$this->_con->prepare('DELETE FROM repondre WHERE id_auto=?');
+      $prepare_requete->execute(array($id));
+
+    }
+    function supprimer_commentaire($id){
+      $prepare_requete=$this->_con->prepare('DELETE FROM commentaire WHERE id=?');
+      $prepare_requete->execute(array($id));
+
     }
   }
 

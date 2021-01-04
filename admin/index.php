@@ -51,9 +51,9 @@
                           <div class="d-flex flex-column justify-content-around">
                             <small class="mb-1 text-muted">Nombre de message</small>
                             <h5 class="mr-2 mb-0"><?php
-                            
-                            $message= new Admin ; 
-                            $message->nbreMessage();
+                           
+                            //$message= new Admin ; 
+                            //$message->nbreMessage();
                             
                             ?></h5>
                           </div>
@@ -206,8 +206,8 @@
                       <tbody>
                       <?php
 
-                      $tableau = new Admin() ;
-                      $tableau->afficherMessage();
+                     // $tableau = new Admin() ;
+                     // $tableau->afficherMessage();
 
 
                         ?>

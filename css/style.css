@@ -1039,6 +1039,37 @@ FORMATION
 #su{
   color: green !important;
 }
+.cool{
+  display: table;
+  color: white;
+  background-color: rgb(85, 126, 85);
+  height: 30px;
+  width: 300px;
+  padding-left: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-top: 4px;
+}
+.erro{
+  color: white;
+  display: table;
+  background-color: rgb(236, 130, 130);
+  height: 30px;
+  width: 300px;
+  padding-left: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-top: 4px;
+}
+.errow{
+  color: white;
+  display: table;
+  background-color: rgb(236, 130, 130);
+  height: 30px;
+  width: 300px;
+  padding-left: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-top: 4px;
+  display: none;
+}
 /*------------------------------------------------
 Media queries
 

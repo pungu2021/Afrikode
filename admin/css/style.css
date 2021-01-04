@@ -21921,3 +21921,31 @@ dl li {
   height: 40px;
   border: 1px solid  rgb(236, 149, 149);
 }
+.bt1{
+  border-radius: 50px;
+  background-color: green;
+  color: white;
+  height: 40px;
+  border: 1px solid  green;
+}
+td{
+  word-break: break-all;
+}
+.bidon{
+   margin-top: 30px;
+   margin-bottom: 50px;
+}
+caption{
+  margin-bottom: 20px;
+ text-align: center;
+  color: #0050e3;
+  font-family:Arial, Helvetica, sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  opacity: 0.7;
+}
+@media(max-width:768px){
+  .respo{
+    display: none;
+  }
+}

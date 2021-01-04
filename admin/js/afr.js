@@ -20,4 +20,14 @@ su.forEach(element => {
         }
     });
 });
- 
+var app=document.querySelectorAll(".app");
+app.forEach(element => {
+    element.addEventListener("click",function(e){
+        if(confirm("voulez vous vraiment approuver ce commentaire  dans vos commentaire d'article ?")){
+            
+        }
+        else{
+            e.preventDefault();
+        }
+    });
+});

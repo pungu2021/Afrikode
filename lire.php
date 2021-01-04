@@ -66,6 +66,8 @@ $_SESSION["url"]=$url;
                  </div>
           </aside>
     </section>
+    <span class="errow"></span>
+    <?php if(isset($_SESSION["conf"])) echo $_SESSION ["conf"]; ?>
     <span class="com"><?php if($total>1)echo $total.'  commentaires'; else echo $total.'  commentaire';?></span>
     <form action="trait.php" method="post">
       <section class="row">
@@ -88,7 +90,7 @@ $_SESSION["url"]=$url;
         <?php  foreach($com as $co){?>
            <div class="premier-bloc ">
               <figure>
-                 <img src="images/afrikode.jpg" alt="" class="pub">
+                 <img src="images/g.jpg" alt="" class="pub">
              </figure>
            </div>
            <div class="second-bloc">
@@ -103,7 +105,7 @@ $_SESSION["url"]=$url;
             <div class="troisieme-bloc">
                <div class="premier-bloc ">
                   <figure>
-                     <img src="images/afrikode.jpg" alt="" class="pub">
+                     <img src="images/g.jpg" alt="" class="pub">
                   </figure>
                </div>
                <div class="second-bloc">
@@ -118,7 +120,7 @@ $_SESSION["url"]=$url;
                 <!-- formulaire de repondre -->
         
            <?php }?>
-          
+           <?php unset($_SESSION["conf"]) ?>
  </div>
 </main>
 <?php include_once 'footer.php' ?>

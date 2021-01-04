@@ -73,3 +73,18 @@ document.getElementById("news").addEventListener("click",function(e){
     xhl.open("POST","./news.php");
     xhl.send(data);
 });
+
+var tc=document.querySelector(".commentaire-btn");
+var pseudo=document.querySelector("#pseudo");
+var messa=document.querySelector("#message");
+var gmail=document.querySelector("#gmail");
+tc.addEventListener("click",function(e){
+    if(pseudo.value=="" || messa.value=="" || gmail.value==""){
+        e.preventDefault();
+        document.querySelector(".errow").style.display="block";
+        document.querySelector(".errow").innerHTML="veuillez remplir tous les champs";
+    }
+    else
+    document.querySelector(".errow").innerHTML="";
+    
+});

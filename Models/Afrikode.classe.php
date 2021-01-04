@@ -55,7 +55,7 @@
                 // remplacer le point par le dernier numero id et concatener avec le point
                 $contenu_photo=str_replace('.',$i.'.',$contenu_photo);
                 // deplacement de l'image vers notre projet dans le dossier image
-                  move_uploaded_file($temporaire,'../images/'.$contenu_photo);
+                  move_uploaded_file($temporaire,'../img/'.$contenu_photo);
                 // prepation d'insertion de données
                 $prepare_requete=$this->_con->prepare('INSERT INTO articles(titre,contenu,photo,date_pub) VALUES(?,?,?,NOW())');
                 $prepare_requete->execute(array($titre,$contenu,$contenu_photo));
@@ -166,14 +166,16 @@
     }
     public function recupe_commentaire($id){
       $id=(int)$id;
-      $req=$this->_con->prepare('SELECT * from commentaire WHERE id_article=?');
-      $req->execute(array($id));
+      $num=1;
+      $req=$this->_con->prepare('SELECT * from commentaire WHERE id_article=? and approuver=?');
+      $req->execute(array($id,$num));
       return $req->fetchAll();
     }
     public function recupe_reponse($id){
       $id=(int)$id;
-      $req=$this->_con->prepare('SELECT * from repondre WHERE id=?');
-      $req->execute(array($id));
+      $num=1;
+      $req=$this->_con->prepare('SELECT * from repondre WHERE id=? and approuver=?');
+      $req->execute(array($id,$num));
       return $req->fetchAll();
     }
     public function derniers_articles(){
@@ -220,8 +222,7 @@
                    $num=$nombre;
                    }
                 if(!is_numeric($nombre))
-                      $num=1;
-                   
+                      $num=1;      
         }
         else{
           $num=1;
