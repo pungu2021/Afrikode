@@ -8,13 +8,13 @@
  <div class="noir">
      <div class="row ">
          <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12 tx">
-              <p class="al">Apprendre des nouvelles choses</p><br>
+              <p class="text-justify al">Apprendre des nouvelles </p><br> 
+              <p class=" text-center al">choses</p> <br> 
               <p class="al1"></p>
-              <p class="al2">Améliorez-vous et apprenez de nouvelles choses grâce à
-                  nos formations en développement , programmation , . . .
+              <p class="al2">Améliorez-vous et apprenez de nouvelles choses grâce en participant à formations en développement , programmation , . . .
                </p>
-               <button class="btn10">Inscription</button>
-               <button class="btn20">Formation</button>
+               <button class="btn10 visible">Inscription</button>
+               <button class="btn20 visible">Formation</button>
          </div>
          <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12 visible">
             <figure class="centre">
@@ -53,7 +53,7 @@
                      <img src="images/j.jpg" alt="" class="im-confre">
                  </figure>
                  <span>Christian Kalaki</span>
-                 <p class="vote">
+                 <p class="vote text-justify">
                  Je vous remercie vraiment pour tout. En peu de temps, 
                    j’ai compris plus de choses
                   avec vos cours qu’avec n’importe quel livre. 
@@ -64,7 +64,7 @@
                      <img src="images/t.jpg" alt="" class="im-confre">
                  </figure>
                  <span>Syntiche Mbelu</span>
-                 <p class="vote">
+                 <p class="vote text-justify">
                  Vous êtes le meilleur ! J'avais failli abandonner
                   la programmation et grâce à un ami qui m'a fait connaitre votre site,
                   je m'en sors maintenant. Merci à vous. Que Dieu vous bénisse.  
@@ -75,7 +75,7 @@
                      <img src="images/pu.jpg" alt="" class="im-confre">
                  </figure>
                  <span>Souley Man</span>
-                 <p class="vote">
+                 <p class="vote text-justify">
                  Je tiens à vous remercier pour vos formations.
                   J'apprends beaucoup plus que ce que 
                  j'ai appris à l'université. Prenez soin de vous.   

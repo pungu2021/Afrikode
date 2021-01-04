@@ -3,7 +3,7 @@
    <section class="row">
        <aside class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
             <p><span class="nom-afrikode">{Afri<span class="kod">kode}</span></span></p>
-            <p class="vop10">
+            <p class="text-justify vop10">
             Afrikode est une entreprise web dynamique , qui a pour but
             de mettre en adéquation la technique et la complexité de l
             'informatique , du graphisme et du community 
@@ -19,7 +19,7 @@
                 <img src="images/tw.jpg" alt="" class="fist">
             </figure>
        </aside>
-       <aside class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+       <aside class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-justify ">
        <span class="titre">Notre adresse et contact</span>
        <p class="vop1">37 bis , lomami Commune de kintambo , quartier itimbiri <br>
            phone :+243823039778 <br>+243829317615 <br>
@@ -30,18 +30,18 @@
        </aside>
        <aside class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
               <span class="titre">Newsletter</span>
-              <p class="vop1"><input type="checkbox" name="" id="" checked> Voulez-vous vous abonner à notre newsletter et recevez nos emails ?</p>
-              <span class="email">Email</span>
+              <p class="text-justify vop1"><input type="checkbox" name="" id="" checked> Voulez-vous vous abonner à notre newsletter et recevez nos emails ?</p>
+              <span class="email">Email</span> <br>
               <form action="">
-                  <input type="email" name="newsletter" id="new" class="yup"placeholder="votre email ici" ><br>
+                  <input type="email" name="newsletter" id="new" class=" text-justify yup"placeholder="votre email ici" ><br>
                   <span id="toto"></span>
                   <button class="new">Envoyer</button>
               </form>
         </aside>
       </section>
-    </footer>
-    </div>
-    <div class="bork"><p class="">&copy Copyright  <span> <?php echo date("Y")?> afrikode</span> tous droits reservés. </p></div>
+    </footer> <br>
+    </div>  
+    <div class=" text-justify bork"><p class="">&copy Copyright  <span> <?php echo date("Y")?> afrikode</span> tous droits reservés. </p></div>
     <script src="js/prism.js"></script>
     <script src="js/Afrikode.js"></script>
 </body>
