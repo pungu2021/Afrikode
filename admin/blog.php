@@ -1,4 +1,5 @@
 <?php 
+    session_start();
       require 'vue'.DIRECTORY_SEPARATOR.'header.php';
       require 'Controllers'.DIRECTORY_SEPARATOR.'ControllerInsertion.php';
   
@@ -31,8 +32,7 @@
                       </div>
                     <div class="form-group">
                       <label>Télécharger une photo</label>
-                      <input type="file" name="img" class="form-control file-upload-info <?php if(isset($_GET["id"])) echo "visible-false"; else echo "visible-true"?>">
-                      <input type="text" name="photo" class="form-control file-upload-info <?php if(isset($_GET["id"])) echo "visible-true"; else echo "visible-false"?> " value="<?php if(!empty($rec)) echo $rec[0][3] ?>">
+                      <input type="file" name="img" class="form-control file-upload-info ">
                     </div>
                     <div class="form-group">
                       <label for="exampleTextarea1">Article</label>
@@ -40,7 +40,7 @@
                     </div>
                     <button  class="btn btn-primary mr-2"  name="publier">Publier</button>
                     <button class="btn btn-light" type="reset">Annuler</button>
-                    <button class="btn btn-primary mr-2"  name="modifier_valide" value="modifier">modification_valide</button>
+                    <button class="btn btn-primary mr-2"  name="modifier_valide" value="modifier">modifier</button>
                   </form>
                 </div>
               </div>

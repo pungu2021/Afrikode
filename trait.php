@@ -18,11 +18,18 @@ if(isset($_POST['pseudo']) and !empty($_POST['pseudo']) and isset($_POST['gmail'
   $gmail=$_POST['gmail'];
   $message=htmlspecialchars(strip_tags($_POST["message"]));
   $art=(int)$_POST["art"];
-         $req=$con->prepare("INSERT INTO commentaire(pseudo,gmail,mesage,id_article,pub_mes) VALUES(?,?,?,?,NOW())");
-         $req->execute(array($pseud,$gmail,$message,$art));
-         $url=$_SESSION["url"];
-         $_SESSION["conf"]='<span class="cool">Votre message a été  envoyé </span>';
-        header("location:$url");
+  if(preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#",$gmail)){
+    $req=$con->prepare("INSERT INTO commentaire(pseudo,gmail,mesage,id_article,pub_mes) VALUES(?,?,?,?,NOW())");
+    $req->execute(array($pseud,$gmail,$message,$art));
+    $url=$_SESSION["url"];
+    $_SESSION["conf"]='<span class="cool">Votre message a été  envoyé </span>';
+   header("location:$url");
+  }
+     else {
+      $url=$_SESSION["url"];
+      $_SESSION["conf"]=' <span class="erro">votre gmail est invalid</span>';
+      header("location:$url");
+     }   
 }
 else{
 $url=$_SESSION["url"];

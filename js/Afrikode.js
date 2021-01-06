@@ -65,6 +65,7 @@ document.getElementById("news").addEventListener("click",function(e){
            var gx=document.querySelector(".ne");
            cr.value="disabled"; 
            gx.setAttributeNode(cr);
+           document.getElementById("new").value="";
       }
         }
         else

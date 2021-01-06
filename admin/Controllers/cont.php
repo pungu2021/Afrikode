@@ -1,5 +1,6 @@
 
   <?php 
+  session_start();
   date_default_timezone_set('Africa/Kinshasa');
  function afrikode($class){
        require './class/'.$class.'.classe.php';

@@ -17,11 +17,19 @@ if(isset($_POST['pseudo1']) and !empty($_POST['pseudo1']) and isset($_POST['gmai
   $gmail=$_POST['gmail1'];
   $message=htmlspecialchars(strip_tags($_POST["message1"]));
   $art=(int)$_POST["id_com"];
-         $req=$con->prepare("INSERT INTO repondre(id,pseudo,gmail,mesage,pub_mes) VALUES(?,?,?,?,NOW())");
-         $req->execute(array($art,$pseud,$gmail,$message));
-         $url=$_SESSION["url"];
-         $_SESSION["conf"]='<span class="cool">Votre message a été  envoyé</span> ';
-         header("location:$url");
+  if(preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#",$gmail)){
+    $req=$con->prepare("INSERT INTO repondre(id,pseudo,gmail,mesage,pub_mes) VALUES(?,?,?,?,NOW())");
+    $req->execute(array($art,$pseud,$gmail,$message));
+    $url=$_SESSION["url"];
+    $_SESSION["conf"]='<span class="cool">Votre message a été  envoyé</span> ';
+    header("location:$url");
+  }
+  else {
+    $url=$_SESSION["url"];
+    $_SESSION["conf"]=' <span class="erro">votre gmail est invalid</span>';
+    header("location:$url");
+   } 
+    
 }
 else{
 $url=$_SESSION["url"];

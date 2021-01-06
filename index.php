@@ -40,7 +40,7 @@
                                   <img src="images/afrikode.jpg" alt="" class="logo-afrikode">
                               </figure>
                             <p><?php echo $toto["titre"]?></p>
-                            <span> <?php echo temps(date("Y-m-d H:i:s"),$toto['date_pub']);?> | par carlos</span>
+                            <span> <?php echo temps(date("Y-m-d H:i:s"),$toto['date_pub']);?> | par <?php  $ex=explode(" ",$toto["auteur"]); echo $ex[0]?></span>
                         </div>
                         </a> 
           </aside>

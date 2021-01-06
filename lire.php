@@ -23,10 +23,10 @@ $_SESSION["url"]=$url;
             <?php foreach ($lire as $salut) {?>
              <h3><?php echo $salut["titre"]?></h3>
               <div class="cap">
-                 <figure>
-                   <img src="images/afrikode.jpg" alt="" class="pub">
+                 <figure>       
+                   <img src="img_admin/<?php echo $hj[0]?>" alt="" class="pub"> 
                      <p class="place-droit">
-                         <span >jeremie ilumbu </span><br>
+                         <span ><?php echo $salut["auteur"]?></span><br>
                          <?php echo temps(date("Y-m-d H:i:s"),$salut['date_pub']);?>
                      </p>
                  </figure>
@@ -37,7 +37,7 @@ $_SESSION["url"]=$url;
                   <a href=""><img src="images/wh.png" alt="" class="picture"></a>
               </figure>
               <figure>
-                  <img src="images/<?php echo $salut["photo"]?>" alt="" class="pub-image">
+                  <img src="img/<?php echo $salut["photo"]?>" alt="" class="pub-image">
               </figure>
               <p class="text"><?php echo $salut["contenu"]?></p>
           </article>

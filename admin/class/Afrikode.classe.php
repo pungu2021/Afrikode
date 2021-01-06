@@ -13,6 +13,7 @@
     private const APRES_AVANT=4;
     private $reche;
     public static $rayan;
+    public static $login=null;
     // declaration du construteur 
     public function __construct(){
       /**
@@ -38,10 +39,10 @@
      * @param [type] $photo
      * @return void
      */
-    public function Insertion($titre,$contenu,$photo,$categorie){
+    public function Insertion($titre,$contenu,$photo,$categorie,$auteur){
       // suppression de caractere illegaux
         $titre=htmlspecialchars($titre);
-        $contenu_photo=htmlspecialchars(trim($photo['name']));
+        $contenu_photo=$photo['name'];
         $temporaire=$photo['tmp_name'];
         // verification si les parametre passer existe et ils ne sont pas nuls
         if(isset($titre) and !empty($titre) and isset($contenu) and !empty($contenu) and isset($contenu_photo) and !empty($contenu_photo)){
@@ -57,8 +58,8 @@
                 // deplacement de l'image vers notre projet dans le dossier image
                   move_uploaded_file($temporaire,'../img/'.$contenu_photo);
                 // prepation d'insertion de données
-                $prepare_requete=$this->_con->prepare('INSERT INTO articles(titre,contenu,photo,categorie,date_pub) VALUES(?,?,?,?,NOW())');
-                $prepare_requete->execute(array($titre,$contenu,$contenu_photo,$categorie));
+                $prepare_requete=$this->_con->prepare('INSERT INTO articles(titre,contenu,photo,categorie,date_pub,auteur) VALUES(?,?,?,?,NOW(),?)');
+                $prepare_requete->execute(array($titre,$contenu,$contenu_photo,$categorie,$auteur));
              }
         }
          }
@@ -74,13 +75,16 @@
      public function  Modification($titre,$contenu,$photo,$categorie,$id){
         // suppression de caractere illegaux
       $titre=htmlspecialchars($titre);
-      $contenu_photo=htmlspecialchars(trim($photo));
       $id=(int)$id;
+      $temporaire=$photo['tmp_name'];
+      $photo=$photo['name'];
+      // modification de donnée dans la base de donnée
+      move_uploaded_file($temporaire,'../img/'.$photo);
       // verification si les parametre passer existe et ils ne sont pas nuls
-      if(isset($titre) and !empty($titre) and isset($contenu) and !empty($contenu) and isset($contenu_photo) and !empty($contenu_photo)and is_numeric($id) and !empty($id)){
+      if(isset($titre) and !empty($titre) and isset($contenu) and !empty($contenu) and isset($photo) and !empty($photo)and is_numeric($id) and !empty($id)){
          // modification de donnée dans la base de donnée
               $prepare_requete=$this->_con->prepare('UPDATE articles SET titre=?,contenu=?,photo=?,categorie=?,date_pub=NOW() WHERE id=?');
-              $prepare_requete->execute(array($titre,$contenu,$contenu_photo,$categorie,$id));
+              $prepare_requete->execute(array($titre,$contenu,$photo,$categorie,$id));
       }
      }
       /**
@@ -304,5 +308,86 @@
       $prepare_requete->execute(array($id));
 
     }
-  }
+    function validation_admin($login,$password){
+       $logino=htmlspecialchars(strip_tags($login));
+       $password=htmlspecialchars(strip_tags($password));
+       $prepare_requete=$this->_con->prepare('SELECT * FROM admin_compte WHERE login_ad=? and password_ad=?');
+       $prepare_requete->execute(array($logino,$password)); 
+       if($prepare_requete->rowCount()==0){
+          return 0;
+       }
+        else{ 
+            self::$login=$logino;
+            return 1; 
+        }
+    }
+    function Modification_admin($login,$password,$id){
+     // modification de donnée dans la base de donnée
+       if(isset($login)&& !empty($login) && isset($password)&& !empty($password)){
+        $prepare_requete=$this->_con->prepare('UPDATE admin_compte SET login_ad=?,password_ad=? WHERE id=?');
+        $prepare_requete->execute(array($login,$password,$id));
+       }
+    }
+    function Suppression_admin($id){
+      $prepare_requete=$this->_con->prepare('DELETE FROM admin_compte WHERE id=?');
+      $prepare_requete->execute(array($id));
+    }
+    // ajout des administrateur
 
+  function ajout_admin($login,$pass,$img){
+         $login=htmlspecialchars(trim($login));
+        $contenu_photo=htmlspecialchars(trim($img['name']));
+        $temporaire=$img['tmp_name'];
+        $tab=explode(".",$contenu_photo);
+      if(isset($login)&& !empty($login)&&isset($pass)&& !empty($pass)&&isset($img)&& !empty($img)){
+        if(preg_match('#.jpg$|.png$#i',$contenu_photo)){
+          $mag=explode(" ",$login);
+          $contenu_photo=$mag[0].$mag[1].'.'.end($tab);
+          move_uploaded_file($temporaire,'../img_admin/'.$contenu_photo);
+          $prepare_requete=$this->_con->prepare('INSERT INTO admin_compte(login_ad,password_ad,photo,ordinaire) VALUES(?,?,?,?)');
+          $prepare_requete->execute(array($login,$pass,$contenu_photo,0));
+        }
+      }
+      }
+      // recuperation des administrateurs
+      function recuperation_admin(){
+        $req=$this->_con->query('SELECT * from admin_compte ORDER BY id DESC ');
+        return $req->fetchAll();
+      }
+      function connaitre($nom){
+        $ordi=1;
+        $prepare_requete=$this->_con->prepare('SELECT * FROM admin_compte WHERE login_ad=? and ordinaire=?');
+        $prepare_requete->execute(array($nom,$ordi)); 
+        if($prepare_requete->rowCount()==0){
+           return 0;
+        }
+         else{ 
+             return 1; 
+         }
+      }
+      // recupation des donneés admin
+      function Recupara_admin($id){
+        $prepare_requete=$this->_con->prepare('SELECT * FROM admin_compte WHERE id=? ');
+        $prepare_requete->execute(array($id));
+          return $prepare_requete->fetchAll();
+      }
+      function Modification_admin2($login,$password,$photo,$id){
+        $login=htmlspecialchars(trim($login));
+        $password=htmlspecialchars(trim($password)); 
+        $temporaire=$photo['tmp_name'];
+        $photo=$photo['name'];
+        // modification de donnée dans la base de donnée
+        move_uploaded_file($temporaire,'../img_admin/'.$photo);
+          if(isset($login)&& !empty($login) && isset($password)&& !empty($password)&& isset($photo)&& !empty($photo) ){
+           $prepare_requete=$this->_con->prepare('UPDATE admin_compte SET login_ad=?,password_ad=? ,photo=? WHERE id=?');
+           $prepare_requete->execute(array($login,$password,$photo,$id));
+          }
+       }
+       // votra compte unique
+       function votre_admin($login){
+        $req=$this->_con->prepare('SELECT * from admin_compte WHERE login_ad=? ');
+       $req->execute(array($login));
+        return $req->fetch();
+      
+  }
+ }

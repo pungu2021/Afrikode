@@ -15,7 +15,6 @@ $total=0;
       }
       $total++;
   }
-
 // creation d'une fonction de temps , qui permet de calculer le temps
 function temps($date_now,$date_enre){
     // declaration de deux variables date
@@ -48,3 +47,4 @@ function temps($date_now,$date_enre){
         return 'il ya '.floor($date_difference/60).' min';
     }
 }
+$hj=$objet->photo($lire[0]["auteur"]);

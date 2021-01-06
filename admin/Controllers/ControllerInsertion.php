@@ -1,5 +1,4 @@
-
-  <?php 
+<?php
   date_default_timezone_set('Africa/Kinshasa');
  function afrikode($class){
        require './class/'.$class.'.classe.php';
@@ -9,13 +8,13 @@
    $rec="";
    $titre="";
    if(isset($_POST["publier"])){
-     $objet->Insertion($_POST["titre"],$_POST["contenu"],$_FILES["img"],$_POST["categorie"]);
+     $objet->Insertion($_POST["titre"],$_POST["contenu"],$_FILES["img"],$_POST["categorie"],$_SESSION["login"]);
   }
  else if(isset($_GET["id"])){
     $rec=$objet->recuperation($_GET["id"]);
   }
    if(isset($_POST["modifier_valide"])){
-      $objet->Modification($_POST["titre"],$_POST["contenu"],$_POST["photo"],$_POST["categorie"],$_GET["id"]);
+      $objet->Modification($_POST["titre"],$_POST["contenu"],$_FILES["img"],$_POST["categorie"],$_GET["id"]);
     }
    else if(isset($_POST["supprimer"])){
       $objet->Suppression($_POST["id"]);

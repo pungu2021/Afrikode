@@ -62,9 +62,9 @@
                       <aside  class="col-lg-4 col-md-4 col-sm-12 col-xs-12 apro">
                          <div  class="apropos-figure">
                             <figure>
-                                <img src="images/afrikode.jpg" alt="" class="apropos-image">
+                                <img src="images/im.jpg" alt="" class="apropos-image">
                             </figure>
-                            <p>CEO Jeremie Ilumbu , développeur fullstack , jeune entrepreneur</p>
+                            <p>CEO Jeremiah Ilumbu , développeur fullstack , jeune entrepreneur</p>
                             <figure>
                                  <a href=""> <img src="images/fb.png" alt="" class="apro-icon"></a>
                                   <a href=""><img src="images/tw.jpg" alt="" class="apro-icon"></a>

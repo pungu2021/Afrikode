@@ -277,5 +277,10 @@
       $pre=$this->_con->query("SELECT * FROM newsletter ORDER BY id DESC");
       return $pre->fetchAll();
     }
+    function photo($login){
+      $prepare_requete=$this->_con->prepare('SELECT photo FROM admin_compte WHERE login_ad=? ');
+      $prepare_requete->execute(array($login));
+        return $prepare_requete->fetch();
+    }
   }
 

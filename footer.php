@@ -1,5 +1,5 @@
    <div class="taxe">
-   <footer class="container">
+   <footer class="container-fluid">
    <section class="row">
        <aside class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
             <p><span class="nom-afrikode">{Afri<span class="kod">kode}</span></span></p>
