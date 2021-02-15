@@ -1,4 +1,5 @@
 <?php 
+   session_start();
       require 'vue'.DIRECTORY_SEPARATOR.'header.php';
   ?>
        <div class="main-panel">        

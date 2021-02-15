@@ -18,8 +18,8 @@ if(isset($_POST['pseudo1']) and !empty($_POST['pseudo1']) and isset($_POST['gmai
   $message=htmlspecialchars(strip_tags($_POST["message1"]));
   $art=(int)$_POST["id_com"];
   if(preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#",$gmail)){
-    $req=$con->prepare("INSERT INTO repondre(id,pseudo,gmail,mesage,pub_mes) VALUES(?,?,?,?,NOW())");
-    $req->execute(array($art,$pseud,$gmail,$message));
+    $req=$con->prepare("INSERT INTO repondre(id,pseudo,gmail,mesage,pub_mes,auteur) VALUES(?,?,?,?,NOW(),?)");
+    $req->execute(array($art,$pseud,$gmail,$message,$_SESSION["login"]));
     $url=$_SESSION["url"];
     $_SESSION["conf"]='<span class="cool">Votre message a été  envoyé</span> ';
     header("location:$url");

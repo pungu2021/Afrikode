@@ -41,3 +41,4 @@ $recuperation=$objet->derniers_articles();
 function separer($chaine){
     return str_replace(" ","-",$chaine);
   }
+$img=$objet->recuperation_mise_en_jour_image_index_affichage();

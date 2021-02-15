@@ -37,6 +37,7 @@ function temps($date_now,$date_enre){
         return 'il ya '.floor($date_difference/60).' min';
     }
 }
+$toko="";
 if(isset($_GET["id"])){
 $recuperation=$objet->pagination($_GET["id"],8);
 }

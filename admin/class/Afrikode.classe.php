@@ -27,7 +27,7 @@
         // si la connexion à echouer
         catch(PDOException $e){
           // message d'erreur
-        $msg='Erreur de connexion avec la base de donnée '.$e->Message();
+        $msg='Erreur de connexion avec la base de donnée '.$e->getMessage();
               die($msg);
         }
     }
@@ -41,7 +41,7 @@
      */
     public function Insertion($titre,$contenu,$photo,$categorie,$auteur){
       // suppression de caractere illegaux
-        $titre=htmlspecialchars($titre);
+        $titre=htmlspecialchars(trim($titre));
         $contenu_photo=$photo['name'];
         $temporaire=$photo['tmp_name'];
         // verification si les parametre passer existe et ils ne sont pas nuls
@@ -336,6 +336,7 @@
 
   function ajout_admin($login,$pass,$img){
          $login=htmlspecialchars(trim($login));
+         $pass=htmlspecialchars(trim($pass));
         $contenu_photo=htmlspecialchars(trim($img['name']));
         $temporaire=$img['tmp_name'];
         $tab=explode(".",$contenu_photo);
@@ -376,6 +377,9 @@
         $password=htmlspecialchars(trim($password)); 
         $temporaire=$photo['tmp_name'];
         $photo=$photo['name'];
+        $tab=explode(".",$photo);
+        $mag=explode(" ",$login);
+        $photo=$mag[0].$mag[1].'.'.end($tab);
         // modification de donnée dans la base de donnée
         move_uploaded_file($temporaire,'../img_admin/'.$photo);
           if(isset($login)&& !empty($login) && isset($password)&& !empty($password)&& isset($photo)&& !empty($photo) ){
@@ -389,5 +393,125 @@
        $req->execute(array($login));
         return $req->fetch();
       
+  }
+  function mise_en_jour_de_image_index($photo){
+    $temporaire=$photo['tmp_name'];
+    $photo_contenu=$photo['name'];
+    if(isset($photo_contenu)&& !empty($photo_contenu)){
+         $tab=explode(".",$photo_contenu);
+         $extension=end($tab);
+         $photo_contenu='mise.'.$extension;
+        move_uploaded_file($temporaire,'../img_jour/'.$photo_contenu);
+      $req=$this->_con->prepare('UPDATE mise SET photo=?,date_pub =NOW() WHERE id=1');
+      $req->execute(array($photo_contenu));
+    }
+  }
+  function recuperation_mise_en_jour_image_index(){
+    $req=$this->_con->query('SELECT * from mise ORDER BY id DESC');
+     return $req->fetchAll();
+  }
+  function suppression_mise_en_jour_image_index($id){
+    $id=(int)$id;
+    $req=$this->_con->prepare('DELETE FROM mise WHERE id=?');
+      $req->execute(array($id));
+  }
+  function recuperation_inscription(){
+    $req=$this->_con->query('SELECT * from inscription ORDER BY id DESC');
+    return $req->fetchAll();
+  }
+  function sup_inscription(){
+    $this->_con->query('TRUNCATE TABLE inscription');
+  }
+  function suppression_inscription($id){
+    $id=(int)$id;
+    $req=$this->_con->prepare('DELETE FROM inscription WHERE id=?');
+      $req->execute(array($id));
+  }
+  // insertion de pdf dans notre site
+  function pdf_insertion($decription,$poid,$fichier){
+    $temporaire=$fichier['tmp_name'];
+    $photo_contenu=$fichier['name'];
+       if(isset($decription)&& !empty($decription) && isset($poid)&& !empty($poid) && isset($photo_contenu)&& !empty($photo_contenu)){
+            move_uploaded_file($temporaire,'../pdf/'.$photo_contenu);
+          $req=$this->_con->prepare('INSERT INTO pdf(descriptio,poid,file_namo,date_pub) VALUES(?,?,?,NOW())');
+          $req->execute(array($decription,$poid,$photo_contenu));
+        
+        //fin de la condition  
+       }
+  }
+  //recuperation de avec id les pdf
+  function pdf_rec($id){
+    $req=$this->_con->prepare('SELECT * FROM pdf WHERE id=?');
+    $req->execute(array($id));
+    return $req->fetchAll();
+  }
+  // suppression grace id un pdf 
+  function pdf_suppression($id){
+    $req=$this->_con->prepare('DELETE FROM pdf WHERE id=?');
+    $req->execute(array($id));
+  }
+  // Modification pdf grace a id 
+  function pdf_modifier($decription,$poid,$fichier,$id){
+    $temporaire=$fichier['tmp_name'];
+    $photo_contenu=$fichier['name'];
+    if(isset($decription)&& !empty($decription) && isset($poid)&& !empty($poid) && isset($id)&& !empty($id)){
+      if(isset($photo_contenu)&& !empty($photo_contenu)){
+            move_uploaded_file($temporaire,'../pdf/'.$photo_contenu);
+          $req=$this->_con->prepare('UPDATE pdf SET descriptio=?,poid=?,file_namo=?,date_pub =NOW() WHERE id=?');
+          $req->execute(array($decription,$poid,$photo_contenu,$id));
+      }
+      else{
+        $req=$this->_con->prepare('UPDATE pdf SET descriptio=?,poid=?,date_pub =NOW() WHERE id=?');
+        $req->execute(array($decription,$poid,$id));
+      }
+    }
+  }
+  // recuperation pdfs
+  function pdf_recuperation(){
+    $req=$this->_con->query('SELECT * FROM pdf');
+    return $req->fetchAll();
+  }
+  function pdf_code_source($decription,$poid,$fichier){
+    $temporaire=$fichier['tmp_name'];
+    $photo_contenu=$fichier['name'];
+       if(isset($decription)&& !empty($decription) && isset($poid)&& !empty($poid) && isset($photo_contenu)&& !empty($photo_contenu)){
+            move_uploaded_file($temporaire,'../pdf/'.$photo_contenu);
+          $req=$this->_con->prepare('INSERT INTO pdf_code(descriptio,poid,file_namo,date_pub) VALUES(?,?,?,NOW())');
+          $req->execute(array($decription,$poid,$photo_contenu));
+        
+        //fin de la condition  
+       }
+  }
+
+  function pdf_source_rec($id){
+    $req=$this->_con->prepare('SELECT * FROM pdf_code WHERE id=?');
+    $req->execute(array($id));
+    return $req->fetchAll();
+  }
+  // suppression grace id un pdf 
+  function pdf_source_suppression($id){
+    $req=$this->_con->prepare('DELETE FROM pdf_code WHERE id=?');
+    $req->execute(array($id));
+  }
+  // Modification pdf grace a id 
+  function pdf_source_modifier($decription,$poid,$fichier,$id){
+    $temporaire=$fichier['tmp_name'];
+    $photo_contenu=$fichier['name'];
+    if(isset($decription)&& !empty($decription) && isset($poid)&& !empty($poid) && isset($id)&& !empty($id)){
+      if(isset($photo_contenu)&& !empty($photo_contenu)){
+            move_uploaded_file($temporaire,'../pdf/'.$photo_contenu);
+          $req=$this->_con->prepare('UPDATE pdf_code SET descriptio=?,poid=?,file_namo=?,date_pub =NOW() WHERE id=?');
+          $req->execute(array($decription,$poid,$photo_contenu,$id));
+      }
+      else{
+        $req=$this->_con->prepare('UPDATE pdf_code SET descriptio=?,poid=?,date_pub =NOW() WHERE id=?');
+        $req->execute(array($decription,$poid,$id));
+      }
+    }
+  }
+  // recuperation pdfs
+  function pdf_source_recuperation(){
+    $req=$this->_con->query('SELECT * FROM pdf_code');
+    return $req->fetchAll();
   }
  }

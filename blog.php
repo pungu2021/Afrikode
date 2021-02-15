@@ -4,7 +4,7 @@
 ?>
         <div class="top">
             <div class="container " >
-                <span class="blog-titre">Tous les tutoriels</span>
+                <span class="blog-titre darkt <?php if(isset($_COOKIE["dark"])&& !empty($_COOKIE["dark"])) echo"dark-color"; else echo"light-color";?>">Tous les tutoriels</span>
             </div>
         </div>
         <div class="container top-up">
@@ -18,10 +18,10 @@
                     <aside class="col-lg-4">
                        <div class="blog-recherche"> 
                            <div class="rec">Recherche</div>
-                           <form class="form-inline">
+                           <form class="form-inline" action="search.php">
                                 <i class="fas fa-search" aria-hidden="true"></i>
                                 <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
-                                aria-label="Search">
+                                aria-label="Search" name="q">
                             </form> 
                        </div>
                     </aside>
@@ -36,10 +36,10 @@
                             </figure>
                             <div class="noir-image"></div>
                               <figure>
-                                  <img src="images/afrikode.jpg" alt="" class="logo-afrikode">
+                                  <img src="images/codi.jpg" alt="" class="logo-afrikode">
                               </figure>
-                            <p><?php echo $toto["titre"]?></p>
-                            <span> <?php echo temps(date("Y-m-d H:i:s"),$toto['date_pub']);?> | par carlos</span>
+                            <h2 class="darkt <?php if(isset($_COOKIE["dark"])&& !empty($_COOKIE["dark"])) echo"dark"; else echo"light";?>"><?php echo $toto["titre"]?></h2>
+                            <span class="darkt <?php if(isset($_COOKIE["dark"])&& !empty($_COOKIE["dark"])) echo"dark"; else echo"light";?>"> <?php echo temps(date("Y-m-d H:i:s"),$toto['date_pub']);?> | par <?php  $ex=explode(" ",$toto["auteur"]); echo $ex[0]?></span>
                         </div>
                         </a>  
                    </aside>

@@ -15,7 +15,7 @@
        <link rel="stylesheet" href="../css/prism.css">
        <link rel="shortcut icon" href="../images/afro.png">
        <header>
-              <a href="index.php"> <span class="nom-afrikode">{Afri<span class="kod">kode}</span></span></a>
+              <a href="../index.php"> <span class="nom-afrikode">{Afri<span class="kod">kode}</span></span></a>
                <nav>
                     <ul>
                         <li><a href="../blog">Tutoriels</a></li>

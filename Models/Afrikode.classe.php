@@ -10,6 +10,7 @@
     private $_pass="";
     private $_con;
     public static $paginate="";
+    public static $pagi=null;
     private const APRES_AVANT=4;
     private $reche;
     public static $rayan;
@@ -26,7 +27,7 @@
         // si la connexion à echouer
         catch(PDOException $e){
           // message d'erreur
-        $msg='Erreur de connexion avec la base de donnée '.$e->Message();
+        $msg='Erreur de connexion avec la base de donnée '.$e->getMessage();
               die($msg);
         }
     }
@@ -167,16 +168,20 @@
     public function recupe_commentaire($id){
       $id=(int)$id;
       $num=1;
+      if(isset($id) && !empty($id)){
       $req=$this->_con->prepare('SELECT * from commentaire WHERE id_article=? and approuver=?');
       $req->execute(array($id,$num));
       return $req->fetchAll();
+      }
     }
     public function recupe_reponse($id){
       $id=(int)$id;
       $num=1;
+      if(isset($id) && !empty($id)){
       $req=$this->_con->prepare('SELECT * from repondre WHERE id=? and approuver=?');
       $req->execute(array($id,$num));
       return $req->fetchAll();
+    }
     }
     public function derniers_articles(){
       $req=$this->_con->query("SELECT * FROM articles ORDER BY id DESC limit 0,12 ");
@@ -200,8 +205,8 @@
     }
     public function Recherche($key,$nombre,$nombre_par_page){
        if(isset($key) and !empty($key)){
-
-         $this->_reche=htmlspecialchars(strip_tags($key));
+          $key=htmlspecialchars(strip_tags( strip_tags($key)));
+         $this->_reche=htmlspecialchars(strip_tags( strip_tags($key)));
         $req=$this->_con->query ('SELECT * from articles WHERE CONCAT(titre,contenu) LIKE "%'.$key.'%" ORDER BY id DESC ');
         // pagination de recherche 
         $nombre=(int)$nombre;
@@ -282,5 +287,206 @@
       $prepare_requete->execute(array($login));
         return $prepare_requete->fetch();
     }
-  }
+    // controle de l'admin dens le commentaire
+    function controle_admin($nom){
+      $prepare_requete=$this->_con->prepare('SELECT * FROM admin_compte WHERE login_ad=? ');
+      $prepare_requete->execute(array($nom));
+        return $prepare_requete->fetch(); 
+    }
+    //bonus livre pour apprentissage
+     function bonus_livre($prenom,$gmail){
+       $prenom=htmlspecialchars($prenom);
+       if(isset($prenom)&& !empty($prenom)&& isset($gmail)&& !empty($gmail)){
+        if(preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#",$gmail)){
+          $pre=$this->_con->prepare("INSERT INTO bonus_livre(prenom,gmail,date_pub) VALUES(?,?,NOW())");
+          $pre->execute(array($prenom,$gmail));
+          return'<span id="su">votre message à été envoyé avec succes</span>';
+           }
+        else
+          return'<span class="errop">votre gmail n\'est pas correct</span>';
+         }
+       else
+           return '<span class="errop">Veuillez remplir ces champs</span>'; 
+     }
+     function inscription($pseudo,$gmail,$pass,$pass2){
+         if(isset($pseudo)&& !empty($pseudo)&&isset($gmail)&& !empty($gmail)&& isset($pass)&& !empty($pass)){
+             if($pass!=$pass2)
+              return '<span class="errop">Erreur les deux mot de passes sont different </span>';  
+              else if(strlen($pass)<8)
+                 return '<span class="errop">Erreur les mots de passe ne peuvent pas avoir moins de 8 caracteres </span>';  
+             else {
+                      //verification email
+                  if(preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#",$gmail)){
+                        $ca=$this->_con->prepare("SELECT * FROM  inscription WHERE gmail=?");
+                        $ca->execute(array($gmail));
+                        if($ca->rowCount()!=0){
+                          return '<span class="errop">gmail saisie est déjà  utiliser </span>';
+                        }
+                        else{
+                          $pre=$this->_con->prepare("INSERT INTO inscription(pseudo,gmail,pass,date_pub) VALUES(?,?,?,NOW())");
+                          $pre->execute(array($pseudo,$gmail,$pass));
+                            return'<span id="su">votre message à été envoyé avec succes</span>';
+                        }
+                    }
+                    else{
+                      return '<span class="errop">votre gmail est invalide</span>'; 
+                    }
+                }
+         }
+         else{
+              return '<span class="errop">veuillez remplir tous les champs</span>'; 
+         }
+     }
+     function recuperation_mise_en_jour_image_index_affichage(){
+      $req=$this->_con->query('SELECT * from mise ORDER BY id DESC LIMIT 1');
+       return $req->fetch();
+    }
+    function connecter($gmail,$pass){
+      $ca=$this->_con->prepare("SELECT * FROM  inscription WHERE gmail=? AND pass=?");
+      $ca->execute(array($gmail,$pass));
+         return $ca->rowCount();
+    }
+    function rejoindre_coding_africa($pseudo,$gmail,$tel){
+      if(isset($pseudo)&& !empty($pseudo)&&isset($gmail)&& !empty($gmail)&& isset($tel)&& !empty($tel)){ 
+         if(strlen($tel)<10)
+            return '<span class="errop">Erreur le numero ne peuvent pas avoir moins de 10 chiffres </span>';  
+        else {
+                 //verification email
+             if(preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#",$gmail)){
+                   $ca=$this->_con->prepare("SELECT * FROM  rejoin WHERE gmail=?");
+                   $ca->execute(array($gmail));
+                   if($ca->rowCount()!=0){
+                     return '<span class="errop">gmail saisie est déjà  utiliser </span>';
+                   }
+                   else{
+                     
+                     $pre=$this->_con->prepare("INSERT INTO rejoin(pseudo,gmail,telephone,date_pub) VALUES(?,?,?,NOW())");
+                     $pre->execute(array($pseudo,$gmail,$tel));
+                       return'<span id="su">votre message à été envoyé avec succes</span>';
+                   }
+               }
+               else{
+                 return '<span class="errop">votre gmail est invalide</span>'; 
+               }
+           }
+    }
+    else{
+         return '<span class="errop">veuillez remplir tous les champs</span>'; 
+    }
+    }
+    function pdf_recu(){
+      $ca=$this->_con->query("SELECT * FROM pdf");
+       return $ca->fetchAll();
+    }
+    function pdf_source_recu(){
+      $ca=$this->_con->query("SELECT * FROM pdf_code");
+       return $ca->fetchAll();
+    }
 
+    //recuperation cours 
+
+    function cours_recuperation($tables,$id){
+      $id=(int)$id;
+      if($id>8){
+        $id=8;
+      }
+      if($id<1){
+        $id=1;
+      }
+      //on a mis  les tables dans un tableau pour bien se reperer 
+      $tab=["html","php","javascript","vuejs","csharp","langage_c","algorithme","python"];
+      // verification des tables
+      if(isset($tables)and !empty($tables) and is_numeric($tables) and isset($id)and !empty($id)and is_numeric($id)){
+            $tables=$tables-1;
+            if( $tables>=count($tab)){
+               $tables=count($tab)-1;
+            }
+            $rec=$tab[$tables];
+            $compter=$this->_con->query("SELECT * FROM $rec");
+            if($id>$compter->rowCount()){
+              $id=$compter->rowCount();
+            }
+            $req=$this->_con->query("SELECT * FROM $rec ");
+            return $req->fetchAll();
+      }
+    }
+  function cours_id($id,$tables){
+    $id=(int)$id;
+    if($id<1){
+      $id=1;
+       }
+       $tables=(int)$tables;
+        //on a mis  les tables dans un tableau pour bien se reperer 
+      $tab=["html","php","javascript","vuejs","csharp","langage_c","algorithme","python"];
+       if(isset($id)and !empty($id)and is_numeric($id)and isset($tables)and !empty($tables)){
+        $tables=$tables-1;
+        if( $tables>=count($tab)){
+          $tables=count($tab)-1;
+       }
+        $rec=$tab[$tables];
+        $compter=$this->_con->query("SELECT * FROM $rec");
+        if($id>$compter->rowCount()){
+          $id=$compter->rowCount();
+        }
+        $req=$this->_con->prepare("SELECT * FROM $rec WHERE id=?");
+        $req->execute(array($id));
+        return $req->fetchAll();
+       }
+     }
+     // fonction de pagination de cours 
+     function pagi_cours($tables,$id){
+       $table=(int)$tables;
+      $id=(int)$id;
+      if($id<1){
+        $id=1;
+         }
+         $tables=(int)$tables;
+          //on a mis  les tables dans un tableau pour bien se reperer 
+        $tab=["html","php","javascript","vuejs","csharp","langage_c","algorithme","python"];
+         if(isset($id)and !empty($id)and is_numeric($id)and isset($tables)and !empty($tables)){
+          $tables=$tables-1;
+          if( $tables>=count($tab)){
+            $tables=count($tab)-1;
+         }
+          $rec=$tab[$tables];
+          $compter=$this->_con->query("SELECT * FROM $rec");
+          $last=$compter->rowCount();
+          if($id>$last){
+            $id=$last;
+          }
+          if($id<=0){
+            $id=1;
+          }
+          self::$pagi="";
+          if($last>=2){
+             if($id>1){
+               $precedent=$id;
+               $precedent=(int)$precedent-1;
+               $req=$this->_con->prepare("SELECT * FROM $rec WHERE id=?");
+               $req->execute(array($precedent));
+               $re=$req->fetchAll();
+               //remplace les espace par des tirets 
+               $ur=str_replace("?"," ", trim($re[0]["titre"]));
+               $url=str_replace(" ","-",trim($ur)) .'-'.$table.'-'.$precedent;
+               self::$pagi.='<a href="'.$url.'"><span class="pa-precedent">Precedent</span></a>';
+             }
+             if($id==1){
+              self::$pagi.='<a href="../coding.php"><span class="pa-precedent">Home</span></a>';
+             }
+             // verification du suivant ou de boutton suivant 
+             if($id<$last){
+                  $suivant=$id;
+                  $suivant=(int)$suivant+1;
+                  $req1=$this->_con->prepare("SELECT * FROM $rec WHERE id=?");
+                  $req1->execute(array($suivant));
+                  $re1=$req1->fetchAll();
+                  //remplace les espace par des tirets 
+                  $ur1=str_replace("?"," ", trim($re1[0]["titre"]));
+                  $url1=(str_replace(" ","-", $ur1)).'-'.$table.'-'.$suivant;
+                 self::$pagi.='<a href="'.$url1.'"><span class="pa-suivant">Suivant</span></a>'; 
+             }
+          }
+     }
+     return self::$pagi;
+  }
+}

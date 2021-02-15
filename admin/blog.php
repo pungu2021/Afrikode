@@ -36,7 +36,7 @@
                     </div>
                     <div class="form-group">
                       <label for="exampleTextarea1">Article</label>
-                      <textarea class="form-control" id="exampleTextarea1" rows="4" name="contenu" ><?php if(!empty($rec)) echo $rec[0][2] ?></textarea>
+                      <textarea class="form-control jk" id="exampleTextarea1" rows="4" name="contenu" ><?php if(!empty($rec)) echo $rec[0][2] ?></textarea>
                     </div>
                     <button  class="btn btn-primary mr-2"  name="publier">Publier</button>
                     <button class="btn btn-light" type="reset">Annuler</button>
@@ -55,8 +55,6 @@
                         <tr>
                             <th>Id</th>
                             <th>Titre</th>
-                            <th>Categorie</th>
-                            <th>Image</th>
                             <th>date_publication</th>
                         </tr>
                       </thead>
@@ -65,8 +63,6 @@
                         <tr>
                             <td><?php echo$toto['id'];?></td>
                             <td><?php echo$toto['titre'];?></td>
-                            <td><?php echo$toto['categorie'];?></td>
-                            <td><?php echo$toto['photo'];?></td>
                              <td> <?php echo temps(date("Y-m-d H:i:s"),$toto['date_pub']);?></td>
                             <td><a href="blog.php?id=<?php echo $toto['id'];?>"><button class="btn btn-primary btn-rounded" name="modifier">modifier</button></a></td>
                             <td><a href="supprimer.php?id=<?php echo $toto['id'];?>&para=<?php echo$toto['photo'];?>"><button class="btn btn-danger btn-rounded supprimer" id="supprimer">supprimer</button></a></td>
@@ -97,6 +93,16 @@
   <!-- endinject -->
   <!-- Custom js for this page-->
   <!-- End custom js for this page-->
+  <script>
+    tinymce.init({
+      selector: '.jk',
+      plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
+      toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table',
+      toolbar_mode: 'floating',
+      tinycomments_mode: 'embedded',
+      tinycomments_author: 'Author name'
+    });
+  </script>
 </body>
 
 </html>

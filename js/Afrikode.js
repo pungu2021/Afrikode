@@ -21,16 +21,20 @@ function ro(){
          jk++;
          setTimeout(effecertext,50);
      }
-     else{;
+     else{
          if(bo==3)
-              bo=0;
-       }
+           {
+            bo=0;
+           }
+     }
     }
     setTimeout(ecrireText,2000);
-    setTimeout(effecertext,5000);
-    setTimeout(ro,6500);
+    setTimeout(effecertext,8000);
+    setTimeout(ro,11000);
 }
-ro();
+window.addEventListener("load",function(){
+    ro();
+});
 
 var pl=document.getElementById("new");
 var affi=document.getElementById("toto");
@@ -89,3 +93,50 @@ tc.addEventListener("click",function(e){
     document.querySelector(".errow").innerHTML="";
     
 });
+// partie de livre gratuit pour apprendre le web 
+var myForm=document.getElementById("my-form");
+myForm.addEventListener("submit",function(e){
+    e.preventDefault();
+    var xhl;
+    if(window.XMLHttpRequest){
+       xhl=new XMLHttpRequest();
+    }
+    else if(window.ActiveXObject){
+        xhl=new ActiveXObject(Microsoft.XMLHTTP);
+    }
+var data= new FormData(myForm);
+xhl.onreadystatechange=function(){
+if(xhl.readyState==4 && xhl.status==200){
+document.getElementById("rece").innerHTML=xhl.responseText;
+}
+else
+document.getElementById("toto").innerHTML="erreur";
+}
+xhl.open("POST","./ne.php");
+xhl.send(data);
+});
+
+//BOnus partie Apropos
+
+var myForm2=document.getElementById("momo");
+myForm2.addEventListener("click",function(e){
+    e.preventDefault();
+    var xhl;
+    if(window.XMLHttpRequest){
+       xhl=new XMLHttpRequest();
+    }
+    else if(window.ActiveXObject){
+        xhl=new ActiveXObject(Microsoft.XMLHTTP);
+    }
+var data= new FormData(myForm2);
+xhl.onreadystatechange=function(){
+if(xhl.readyState==4 && xhl.status==200){
+document.getElementById("rece2").innerHTML=xhl.responseText;
+}
+else
+document.getElementById("toto").innerHTML="erreur";
+}
+xhl.open("POST","./ne.php");
+xhl.send(data);
+});
+
